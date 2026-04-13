@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brief — PLP 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D49A;
+  --navy: #0D1B2A;
+  --navy-mid: #162539;
+  --navy-light: #1E3352;
+  --cream: #F7F3EC;
+  --white: #FFFFFF;
+  --text-muted: #8A9BB0;
+  --red: #C0392B;
+  --green: #1a6b3c;
+  --border: rgba(201, 168, 76, 0.2);
+}
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: 'Source Sans 3', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-top {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.logo-sub {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mode-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.mode-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+.mode-btn.active {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.mode-btn:hover:not(.active) {
+  color: var(--gold-light);
+}
+
+/* MAIN */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px 80px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* MODE DESCRIPTOR */
+.mode-descriptor {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeIn 0.3s ease;
+}
+
+.mode-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.mode-title span {
+  color: var(--gold);
+}
+
+.mode-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* INPUT AREA */
+.input-wrapper {
+  width: 100%;
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.input-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: var(--cream);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 100px;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+textarea::placeholder {
+  color: var(--text-muted);
+}
+
+textarea:focus {
+  border-color: var(--gold);
+}
+
+.submit-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.submit-btn {
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-arrow {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled) .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* RESPONSE AREA */
+.response-area {
+  width: 100%;
+  animation: slideUp 0.4s ease;
+}
+
+.response-card {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.response-section-label {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label-answer { color: var(--gold); background: rgba(201, 168, 76, 0.05); }
+.label-pivot { color: #5BA4CF; background: rgba(91, 164, 207, 0.05); }
+.label-acknowledge { color: #E8A87C; background: rgba(232, 168, 124, 0.05); }
+.label-address { color: #A8D5A2; background: rgba(168, 213, 162, 0.05); }
+
+.response-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.response-content {
+  padding: 24px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--cream);
+}
+
+.response-content strong {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+/* LOADING */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 48px;
+  color: var(--text-muted);
+}
+
+.loading-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 1.2s ease infinite;
+}
+
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.loading-text {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+/* HISTORY */
+.history-strip {
+  width: 100%;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+
+.history-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.history-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border: 1px solid transparent;
+  margin-bottom: 4px;
+}
+
+.history-item:hover {
+  background: var(--navy-mid);
+  border-color: var(--border);
+}
+
+.history-q {
+  font-size: 0.85rem;
+  color: var(--cream);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.history-mode {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* CLEAR BTN */
+.clear-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-family: 'Source Sans 3', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: 12px;
+}
+
+.clear-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  opacity: 0.4;
+}
+
+.empty-text {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Pill tags for quick prompts */
+.quick-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.quick-prompt {
+  background: var(--navy-mid);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.quick-prompt:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 16px;
+  border-radius: 2px;
+}
+
+/* Error */
+.error-card {
+  background: rgba(192, 57, 43, 0.1);
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: #E07C70;
+  font-size: 0.9rem;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-top">BRIEF</div>
+    <div class="logo-sub">Choose Progress · PLP 2026</div>
+  </div>
+  <div class="mode-switcher">
+    <button class="mode-btn active" id="btn-pivot" onclick="setMode('pivot')">Answer &amp; Pivot</button>
+    <button class="mode-btn" id="btn-attack" onclick="setMode('attack')">Handle Attack</button>
+  </div>
+</header>
+
+<main>
+  <div class="mode-descriptor" id="modeDescriptor">
+    <div class="divider"></div>
+    <div class="mode-title" id="modeTitle">Answer &amp; <span>Pivot</span></div>
+    <div class="mode-desc" id="modeDesc">Type any question a voter might ask. Get the talking points, then the pivot to what is coming next.</div>
+  </div>
+
+  <div class="quick-prompts" id="quickPrompts"></div>
+
+  <div class="input-wrapper">
+    <label class="input-label" for="queryInput" id="inputLabel">What is the voter asking?</label>
+    <textarea id="queryInput" placeholder="e.g. What has the PLP done about crime?" rows="3"></textarea>
+    <div class="submit-row">
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        Get Talking Points <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="responseContainer"></div>
+
+  <div class="history-strip" id="historyStrip" style="display:none;">
+    <div class="history-label">Recent Queries</div>
+    <div id="historyList"></div>
+    <button class="clear-btn" onclick="clearHistory()">Clear History</button>
+  </div>
+</main>
+
+<script>
+const DOCUMENT = `PLP 2026 CHOOSE PROGRESS — CANDIDATE MESSAGING GUIDE
+
+THE ONE-PARAGRAPH STORY:
+In 2021, The Bahamas was in crisis. Together, we turned it around, and laid a foundation for greater progress: more jobs, more opportunity, and more Bahamian ownership. Now the opposition wants to take us back. We can't let them. On May 12th, Bahamians have a clear choice. Choose Progress.
+
+THE NARRATIVE:
+- THE AUDIENCE: Bahamians who work hard, want opportunity for themselves and their family, and want to feel safe. They want results, not promises.
+- WHAT WE MET: Crime was rising. The economy was broken. Costs were crushing families. Grand Bahama was abandoned. Jobs were passing Bahamians by.
+- WHAT WE DID: We came in with a plan. We re-opened the economy. Now, crime is down 31%. Tourism broke records three years running. 15 billion in investment approved. 12,000 Bahamians enrolled in Upskill. Unemployment cut in half. Jobs created across every island.
+- OUR PLAN: Opportunities to learn, earn, and own to allow more Bahamians to succeed. A more affordable life. Safer communities. Better healthcare. More stable, affordable energy. Modern infrastructure on every island.
+- THE CALL TO ACTION: Choose Progress on May 12th. Vote PLP. Keep the momentum going. Don't let the progress be reversed.
+- WHAT THE FNM REPRESENTS: A return to the FNM means returning to the approach that left our economy in shambles, our infrastructure in disrepair, workers overlooked, and crime unchecked. COI offers protest, not governance.
+- WHAT THE PLP REPRESENTS: More Bahamians with good jobs, owning homes, building businesses, earning better wages, on safer streets, with better healthcare and a modern energy grid with more affordable light bills and cost of living.
+
+PILLAR 1 — OPPORTUNITY (LEARN, EARN, AND OWN):
+DELIVERED: Unemployment cut in half (from over 20% to below 10%). Over $15 billion in new investment approved. Tourism broke records three consecutive years — 12.5 million visitors in 2025. Over 2,000 Bahamians under 35 hired into public service. Over 60 industrial agreements signed delivering better pay. Minimum wage increased by 24%. CAPAS open. National Apprenticeship Programme launched. DigiLearn: AI literacy for every student in every government school. Upskill Bahamas: 12,000 Bahamians in free courses. BTVI expanded to Abaco, Eleuthera, and Exuma. SBDC invested $92 million supporting 2,400 entrepreneurs across 16 islands. Stamp duty and VAT exemptions raised to $600,000 for first-home buyers. Rent-to-own launched. Historic land reform: land tribunals and title-based system.
+COMING NEXT: Open BPATH technical and vocational school. Launch Bahamas AI Academy through BTVI and University of The Bahamas. Expand Upskill to 200 courses, 25,000 Bahamians trained by 2031. Expand National Apprenticeship Programme to 100 annually. Universal early childhood education from age four. Skills for Life Programme for at-risk young men. Dedicated economic plan for every Family Island. Strengthen Notice of Vacancy enforcement. Require major investment projects to submit a Bahamian Employment Plan. Launch High-Value Jobs Track. Build continuous pipeline of affordable homes. Significantly expand rent-to-own. Expand credit access for small businesses through SBDC. Create single digital path to register a company.
+QUOTE: "We didn't just talk about opportunity. We built the programmes, created the jobs, and put Bahamians to work. And we are just getting started."
+
+PILLAR 2 — AFFORDABILITY:
+DELIVERED: VAT cut from 12% to 10% in first year. Zero VAT on all unprepared food at grocery stores. Import duties removed on dozens of essential foods. 38 essential items under price control. VAT on many baby products reduced to 5%. 78,000 households pay nothing on their first 200 kilowatt-hours (saving roughly $460 a year). Electricity bills reduced by average 15% for 85% of households. National Prescription Drug Plan covering over 160,000 Bahamians. Catastrophic Care Fund. School Breakfast Programme: over 1.5 million free hot meals served to children.
+COMING NEXT: Complete Golden Yolk Poultry Programme to 14 million eggs annually (80% egg self-sufficiency). Introduce modern competition law to ban price-fixing. Launch Price Comparison App. Create rapid-response anti-gouging system. Diversify trade and open direct sourcing from lower-cost suppliers. Extend health insurance to all public servants. Expand Catastrophic Health Care Fund. Expand access to GLP-1 medicines through NHI.
+QUOTE: "We cannot fully control global prices. But we cut every cost we could. With the energy reforms now underway, we are far from done."
+
+PILLAR 3 — SAFETY AND SOVEREIGNTY:
+DELIVERED: Homicides down 31%. Armed robberies down 39%. Major crimes down 15% overall. 787 new police officers. 570 new Defence Force marines. 379 new correctional officers. Over 1,000 CCTV cameras with facial recognition deployed. Anti-Gang Act: penalties up to 25 years for gang violence. Bail reform closed loopholes for violent offenders. $100 million investment in RBDF fleet. Coastal radars installed. Over 13,000 migrants repatriated — more than any administration in Bahamian history.
+COMING NEXT: Expand Clear Hold Build community policing across all of New Providence. Complete new correctional facility and virtual court complex. Operationalize the Independent Commission of Investigations. Establish Community Justice Centres. Build therapeutic boarding school for at-risk youth. Launch Backlog Reduction Court. Establish dedicated Sexual Offences Court. Procure National Biometric Immigration System. Implement mandatory criminal penalties (up to 10 years or $50,000 fines) for public officers facilitating passport or documentation fraud. Establish Prohibited Employer Register.
+QUOTE: "We put officers on the streets, marines on the water, and stronger laws on the books. The numbers show it's working and we have a lot left to do."
+
+PILLAR 4 — ENERGY AND INFRASTRUCTURE:
+DELIVERED: Electricity bills reduced by average 15% for 85% of households. 78,000 households paying nothing on their first 200kWh — the Equity Rate Adjustment. Over $1 billion in energy investment secured. Utility-scale solar microgrids launched on every major island — the first in our nation's history. Family Island Renaissance: 19 airports being built or upgraded. Dozens of clinics repaired and upgraded; 5 new clinics built. Over $3 billion in new projects underway in Grand Bahama alone.
+COMING NEXT: Complete 23 microgrid and solar projects within this term. Roll out smart meters nationwide. Bring Grand Bahama into unified national energy strategy. Complete Family Island Renaissance for all 19 airports. Improve connectivity via broadband, expanded airlift, and national seaplane network. Begin public consultation on a new city in Andros. Advance Freeport Health Campus, Grand Bahama International Airport, and Grand Lucayan redevelopment. Launch FarmBahamas Digital Platform and National Containerised Farm Programme.
+QUOTE: "We are building the infrastructure and the energy system that will power the next chapter of Bahamian development and lower the cost of living for every family."
+
+PILLAR 5 — HEALTHCARE:
+DELIVERED: National Prescription Drug Plan covering over 160,000 Bahamians. Catastrophic Care Fund. New hospital project launched for New Providence with maternity, paediatric, ICU, emergency, and surgical wards. Freeport Health Campus under construction. Ongoing improvements at Princess Margaret Hospital including new A&E wing. Dozens of clinics repaired and upgraded; 5 new clinics built. Hundreds of new healthcare workers recruited; salary and retention increases for nurses and doctors. Mental Health Act modernised.
+COMING NEXT: Complete Freeport Health Campus and deliver new modern specialty hospital in New Providence. Extend health insurance to all public servants. Implement 10-year National Health Strategy focused on cancer, diabetes, kidney disease, and heart disease. Adopt four-year national mental health and suicide prevention strategic plan including 24-hour National Suicide Prevention Hotline. Expand access to GLP-1 medications. Expand telemedicine to all major Family Island clinics within two years. Strengthen training through PHA Academy.
+QUOTE: "We are building a system where your access to care does not depend on your income — and we will not stop until every Bahamian can count on it."
+
+THE OPPOSITION:
+THE FNM: They didn't sign a single agreement to increase wages. They left Grand Bahama without a serious development plan. Under their watch, crime surged and opportunity stalled. They had a chance to govern and failed our people. They are fighting among themselves, making desperate attacks, and are not ready to lead. They are threatening to stop, review, and cancel progress: School Breakfast Programme, Post Office Savings Bank, firing public servants.
+THE COI: COI is a protest movement, not a governing option. They have no track record, no tested leadership, and no detailed plan. A vote for COI is not a vote for change. Anger is not a good foundation for governance.
+THE REAL ENEMY: The real threat to progress is reversal. Going back to policies that did not work. Losing momentum on programmes that are delivering. Losing jobs and opportunities that are just coming online. Starting over when Bahamians cannot afford to start over.
+
+HANDLING HARD QUESTIONS:
+Q: Life is still too expensive — Acknowledge it first: "You are right — prices are still high and that is real pressure." Then go specific: VAT cut, zero VAT on grocery food, duty removals, 38 items under price control, electricity bills down 15% for 85% of households, 78,000 households paying nothing on their first 200kWh. Then plant forward: "The energy reform we are building now will bring costs down further. Quitting now means losing that before it arrives."
+Q: Crime is still a problem — Do not argue. Agree the work is not done: "That is exactly why we cannot hand back the gains we have made. 31% fewer homicides did not happen by accident. It happened because of new officers, new laws, and new technology. More is coming. Changing direction now means losing that ground."
+Q: What about the passport scandal? — Do not avoid it. "That was wrong and it was addressed. People are being prosecuted and sentenced to prison as we speak. We aren't the ones who relaxed the rules for passports (that was the FNM). But we are the ones who fixed it. We also put forward the toughest immigration enforcement approach in decades."
+Q: Why should I trust the PLP again? — Lead with results: "Here is our record." Pick three to five specifics relevant to the constituent. "These are not promises. They are already happening."
+Q: Thinking about voting COI — Respect it. "I understand. But do you know what they are offering? Do they have a healthcare plan? An energy plan? A Grand Bahama plan? A team that has done this before? Progress on these issues is happening under this administration right now."
+
+FIVE RULES:
+1. Lead with the voter — the voter is the focus, not the party.
+2. Name three to five things you personally delivered for your constituency.
+3. Never ignore a hard question. Acknowledge, then redirect.
+4. Always name the alternative and their record.
+5. End every conversation with a call to action: Choose Progress. Vote PLP on May 12th.`;
+
+const QUICK_PIVOT = [
+  "What has the PLP done about crime?",
+  "Why is life still so expensive?",
+  "What are you doing for young people?",
+  "What is coming next on energy?",
+  "Why should I vote PLP again?"
+];
+
+const QUICK_ATTACK = [
+  "What about the passport scandal?",
+  "You all had four years and things are still hard",
+  "I'm thinking about voting COI",
+  "Crime is still bad in my community",
+  "The FNM says you wasted money"
+];
+
+let currentMode = 'pivot';
+let history = [];
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-pivot').classList.toggle('active', mode === 'pivot');
+  document.getElementById('btn-attack').classList.toggle('active', mode === 'attack');
+
+  if (mode === 'pivot') {
+    document.getElementById('modeTitle').innerHTML = 'Answer &amp; <span>Pivot</span>';
+    document.getElementById('modeDesc').textContent = 'Type any question a voter might ask. Get the talking points, then the pivot to what is coming next.';
+    document.getElementById('inputLabel').textContent = 'What is the voter asking?';
+    document.getElementById('queryInput').placeholder = 'e.g. What has the PLP done about crime?';
+  } else {
+    document.getElementById('modeTitle').innerHTML = 'Handle <span>Attack</span>';
+    document.getElementById('modeDesc').textContent = 'Type an attack, concern, or objection. Get how to acknowledge it, address it, and pivot.';
+    document.getElementById('inputLabel').textContent = 'What is the attack or concern?';
+    document.getElementById('queryInput').placeholder = 'e.g. You all had four years and things are still hard';
+  }
+
+  renderQuickPrompts();
+  document.getElementById('responseContainer').innerHTML = '';
+}
+
+function renderQuickPrompts() {
+  const prompts = currentMode === 'pivot' ? QUICK_PIVOT : QUICK_ATTACK;
+  const container = document.getElementById('quickPrompts');
+  container.innerHTML = prompts.map(p =>
+    `<button class="quick-prompt" onclick="usePrompt(this.textContent)">${p}</button>`
+  ).join('');
+}
+
+function usePrompt(text) {
+  document.getElementById('queryInput').value = text;
+  handleSubmit();
+}
+
+async function handleSubmit() {
+  const query = document.getElementById('queryInput').value.trim();
+  if (!query) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+
+  const container = document.getElementById('responseContainer');
+  container.innerHTML = `
+    <div class="loading-state">
+      <div class="loading-dots">
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+        <div class="loading-dot"></div>
+      </div>
+      <div class="loading-text">Pulling from the guide...</div>
+    </div>`;
+
+  const systemPrompt = currentMode === 'pivot'
+    ? `You are a campaign briefing tool for PLP candidates in the 2026 Bahamian general election. Your job is to give sharp, on-point talking points drawn directly from the provided campaign document.
+
+When given a voter question, respond with TWO clearly separated sections:
+
+SECTION 1 — ANSWER (label it exactly: **ANSWER**)
+Give 3-5 punchy talking points that directly answer the question, drawn from the campaign document. Use specific numbers and facts. Each point on its own line starting with a bullet (•). Be confident but not arrogant. Lead with the voter's interest, not the party's glory.
+
+SECTION 2 — PIVOT (label it exactly: **PIVOT**)
+Give 2-3 sentences that naturally transition to what is coming next. Name specific policies and programmes from the document that are coming — BPATH, Bahamas AI Academy, smart meters, Golden Yolk, Clear Hold Build, etc. — by name. This is how the candidate ends on momentum, not defence. Start with a natural transition phrase.
+
+SECTION 3 — FOLLOW UP (label it exactly: **FOLLOW UP**)
+One short, natural closing question that invites the voter to go deeper or share what else they care about. Examples: "Is there a particular area you'd like to know more about?" or "What matters most to your family right now?" Keep it warm and conversational, not scripted.
+
+Never say "the opposition." Always say "the FNM" specifically. Keep language direct, conversational, and Bahamian in tone. No em dashes. No rhetorical questions. No academic language. This is for use at a door, in a meeting, or on camera.`
+    : `You are a campaign briefing tool for PLP candidates in the 2026 Bahamian general election. Your job is to help candidates handle attacks, objections, and hard questions using the campaign document.
+
+When given an attack or concern, respond with THREE clearly separated sections:
+
+SECTION 1 — ACKNOWLEDGE (label it exactly: **ACKNOWLEDGE**)
+1-2 sentences that validate the concern without being defensive. Show the candidate heard it. Do not dismiss, deflect, or minimise. This builds trust.
+
+SECTION 2 — ADDRESS (label it exactly: **ADDRESS**)
+3-5 bullet points (•) that directly address the attack using specific facts, numbers, and proof points from the campaign document. Be precise and factual. If appropriate, name what the FNM did or failed to do. Never say "the opposition" — always say "the FNM."
+
+SECTION 3 — PIVOT (label it exactly: **PIVOT**)
+2-3 sentences that move from defence to offence. Name specific policies and programmes coming next from the document — BPATH, Bahamas AI Academy, smart meters, Golden Yolk, Clear Hold Build, new hospital, etc. — by name. Why progress must continue and why now is not the time to go back. End strong.
+
+SECTION 4 — FOLLOW UP (label it exactly: **FOLLOW UP**)
+One short, natural closing question that invites the voter to share what else they care about or go deeper on a specific concern. Keep it warm, not scripted.
+
+Keep language direct, conversational, and Bahamian in tone. No em dashes. No rhetorical questions. No academic language.`;
+
+  try {
+    const response = await fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: query,
+        systemPrompt: systemPrompt + "\n\nCAMPAIGN DOCUMENT:\n" + DOCUMENT
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.[0]?.text || '';
+
+    if (!text) throw new Error("No response");
+
+    // Parse sections
+    const rendered = renderResponse(text, currentMode);
+    container.innerHTML = rendered;
+
+    // Add to history
+    history.unshift({ query, mode: currentMode, response: text });
+    if (history.length > 8) history.pop();
+    renderHistory();
+
+  } catch (err) {
+    container.innerHTML = `<div class="error-card">Something went wrong. Check your connection and try again.</div>`;
+  }
+
+  btn.disabled = false;
+}
+
+function renderResponse(text, mode) {
+  const followupCard = (content) => content ? `
+    <div class="response-card">
+      <div class="response-section-label" style="color:#B8A0D8;background:rgba(184,160,216,0.05);">
+        <div class="response-dot" style="background:#B8A0D8;"></div> Close With
+      </div>
+      <div class="response-content" style="font-style:italic;color:var(--gold-light);">${content}</div>
+    </div>` : '';
+
+  if (mode === 'pivot') {
+    const answerMatch = text.match(/\*\*ANSWER\*\*([\s\S]*?)(?=\*\*PIVOT\*\*|\*\*FOLLOW UP\*\*|$)/i);
+    const pivotMatch = text.match(/\*\*PIVOT\*\*([\s\S]*?)(?=\*\*FOLLOW UP\*\*|$)/i);
+    const followMatch = text.match(/\*\*FOLLOW UP\*\*([\s\S]*?)$/i);
+
+    const answer = answerMatch ? formatContent(answerMatch[1].trim()) : formatContent(text);
+    const pivot = pivotMatch ? formatContent(pivotMatch[1].trim()) : '';
+    const follow = followMatch ? formatContent(followMatch[1].trim()) : '';
+
+    return `
+      <div class="response-area">
+        <div class="response-card">
+          <div class="response-section-label label-answer">
+            <div class="response-dot"></div> Answer
+          </div>
+          <div class="response-content">${answer}</div>
+        </div>
+        ${pivot ? `
+        <div class="response-card">
+          <div class="response-section-label label-pivot">
+            <div class="response-dot"></div> Pivot Forward
+          </div>
+          <div class="response-content">${pivot}</div>
+        </div>` : ''}
+        ${followupCard(follow)}
+      </div>`;
+  } else {
+    const ackMatch = text.match(/\*\*ACKNOWLEDGE\*\*([\s\S]*?)(?=\*\*ADDRESS\*\*|$)/i);
+    const addMatch = text.match(/\*\*ADDRESS\*\*([\s\S]*?)(?=\*\*PIVOT\*\*|$)/i);
+    const pivMatch = text.match(/\*\*PIVOT\*\*([\s\S]*?)(?=\*\*FOLLOW UP\*\*|$)/i);
+    const followMatch = text.match(/\*\*FOLLOW UP\*\*([\s\S]*?)$/i);
+
+    const ack = ackMatch ? formatContent(ackMatch[1].trim()) : '';
+    const add = addMatch ? formatContent(addMatch[1].trim()) : formatContent(text);
+    const piv = pivMatch ? formatContent(pivMatch[1].trim()) : '';
+    const follow = followMatch ? formatContent(followMatch[1].trim()) : '';
+
+    return `
+      <div class="response-area">
+        ${ack ? `
+        <div class="response-card">
+          <div class="response-section-label label-acknowledge">
+            <div class="response-dot"></div> Acknowledge
+          </div>
+          <div class="response-content">${ack}</div>
+        </div>` : ''}
+        <div class="response-card">
+          <div class="response-section-label label-address">
+            <div class="response-dot"></div> Address
+          </div>
+          <div class="response-content">${add}</div>
+        </div>
+        ${piv ? `
+        <div class="response-card">
+          <div class="response-section-label label-pivot">
+            <div class="response-dot"></div> Pivot Forward
+          </div>
+          <div class="response-content">${piv}</div>
+        </div>` : ''}
+        ${followupCard(follow)}
+      </div>`;
+  }
+}
+
+function formatContent(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^•\s(.+)$/gm, '<p style="padding-left:16px;margin-bottom:8px;border-left:2px solid rgba(201,168,76,0.3);">$1</p>')
+    .replace(/^-\s(.+)$/gm, '<p style="padding-left:16px;margin-bottom:8px;border-left:2px solid rgba(201,168,76,0.3);">$1</p>')
+    .replace(/\n\n/g, '</p><p style="margin-bottom:10px;">')
+    .replace(/\n/g, '<br>');
+}
+
+function renderHistory() {
+  if (history.length === 0) {
+    document.getElementById('historyStrip').style.display = 'none';
+    return;
+  }
+  document.getElementById('historyStrip').style.display = 'block';
+  const list = document.getElementById('historyList');
+  list.innerHTML = history.map((h, i) => `
+    <div class="history-item" onclick="reloadHistory(${i})">
+      <div style="color:var(--text-muted);font-size:0.7rem;margin-top:2px;">↩</div>
+      <div class="history-q">${h.query}</div>
+      <div class="history-mode">${h.mode === 'pivot' ? 'A+P' : 'Attack'}</div>
+    </div>`).join('');
+}
+
+function reloadHistory(i) {
+  const item = history[i];
+  setMode(item.mode);
+  document.getElementById('queryInput').value = item.query;
+  document.getElementById('responseContainer').innerHTML = renderResponse(item.response, item.mode);
+}
+
+function clearHistory() {
+  history = [];
+  renderHistory();
+}
+
+// Keyboard shortcut
+document.addEventListener('keydown', function(e) {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+    handleSubmit();
+  }
+});
+
+// Init
+renderQuickPrompts();
+</script>
+</body>
+</html>
